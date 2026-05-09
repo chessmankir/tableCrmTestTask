@@ -1,7 +1,7 @@
-import {CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {PackagePlus} from "lucide-react";
-import {Input} from "@/components/ui/input";
-import {AppCard} from "@/components/Order/AppCard";
+import {Input} from "@/src/components/ui/input";
+import {AppCard} from "@/src/components/Order/AppCard";
 
 export function Goods(){
     return (

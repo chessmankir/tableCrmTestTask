@@ -1,9 +1,9 @@
-import {Label} from "@/components/ui/label";
-import {Input} from "@/components/ui/input";
-import {Button} from "@/components/ui/button";
+import {Label} from "@/src/components/ui/label";
+import {Input} from "@/src/components/ui/input";
+import {Button} from "@/src/components/ui/button";
 import {Search} from "lucide-react";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
-import {CardContent} from "@/components/ui/card";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select";
+import {CardContent} from "@/src/components/ui/card";
 
 export function ClientContent(){
     return (

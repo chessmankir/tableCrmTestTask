@@ -1,6 +1,6 @@
-import {CardContent, CardHeader, CardTitle} from "@/components/ui/card";
-import {Textarea} from "@/components/ui/textarea";
-import {AppCard} from "@/components/Order/AppCard";
+import {CardContent, CardHeader, CardTitle} from "@/src/components/ui/card";
+import {Textarea} from "@/src/components/ui/textarea";
+import {AppCard} from "@/src/components/Order/AppCard";
 
 export  function Comments(){
     return (

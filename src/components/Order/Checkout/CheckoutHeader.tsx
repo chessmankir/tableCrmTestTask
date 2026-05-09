@@ -1,4 +1,4 @@
-import {CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {PlugZap} from "lucide-react";
 
 export function CheckoutHeader(){

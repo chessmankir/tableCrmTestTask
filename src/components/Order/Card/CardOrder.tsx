@@ -1,6 +1,6 @@
-import {CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
+import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {ShoppingCart} from "lucide-react";
-import {AppCard} from "@/components/Order/AppCard";
+import {AppCard} from "@/src/components/Order/AppCard";
 
 export  function  CardOrder(){
     return (

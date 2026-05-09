@@ -1,7 +1,7 @@
-import {CardContent, CardDescription, CardHeader, CardTitle} from "@/components/ui/card";
-import {AppCard} from "@/components/Order/AppCard";
-import {Label} from "@/components/ui/label";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/components/ui/select";
+import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
+import {AppCard} from "@/src/components/Order/AppCard";
+import {Label} from "@/src/components/ui/label";
+import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select";
 
 export  function Parameters(){
     return (

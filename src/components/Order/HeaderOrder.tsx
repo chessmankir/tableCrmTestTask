@@ -1,4 +1,4 @@
-import {Badge} from "@/components/ui/badge";
+import {Badge} from "@/src/components/ui/badge";
 
 export function HeaderOrder(){
     return (
