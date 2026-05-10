@@ -1,11 +1,37 @@
-import {Label} from "@/src/components/ui/label";
-import {Input} from "@/src/components/ui/input";
-import {Button} from "@/src/components/ui/button";
-import {Search} from "lucide-react";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select";
-import {CardContent} from "@/src/components/ui/card";
+import { Label } from "@/src/components/ui/label";
+import { Input } from "@/src/components/ui/input";
+import { Button } from "@/src/components/ui/button";
+import { Search } from "lucide-react";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/src/components/ui/select";
+import { CardContent } from "@/src/components/ui/card";
 
-export function ClientContent({findNumber, phone, setPhone, contragents, onSelectContragent}){
+type Contragent = {
+    id: number | string;
+    name?: string;
+    phone?: string;
+};
+
+type ClientContentProps = {
+    findNumber: () => void | Promise<void>;
+    phone: string;
+    setPhone: (value: string) => void;
+    contragents: Contragent[];
+    onSelectContragent: (value: string) => void;
+};
+
+export function ClientContent({
+                                  findNumber,
+                                  phone,
+                                  setPhone,
+                                  contragents,
+                                  onSelectContragent,
+                              }: ClientContentProps) {
     return (
         <CardContent className="space-y-3">
             <Label htmlFor="clientPhone">Телефон</Label>
@@ -19,7 +45,7 @@ export function ClientContent({findNumber, phone, setPhone, contragents, onSelec
 
             <Label>Найденный клиент</Label>
 
-            <Select disabled={!contragents?.length > 0} onValueChange={onSelectContragent}>
+            <Select  disabled={contragents.length === 0} onValueChange={onSelectContragent}>
                 <SelectTrigger>
                     <SelectValue placeholder="Клиент не выбран"/>
                 </SelectTrigger>

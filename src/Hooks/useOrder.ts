@@ -1,145 +1,172 @@
 "use client";
 
-import {useState} from "react";
-import {BASE_URL} from "@/src/api/Backend"
+import { useState } from "react";
+import { BASE_URL } from "@/src/api/Backend";
 import { toast } from "sonner";
+
+type Id = number | string;
 
 type ApiList<T = unknown> = {
     result: T[];
     count: number;
 };
 
-export function useOrder(){
-    const [token, setToken] = useState('');
-    const [organizations, setOrganizations] = useState([]);
-    const [selectOrganization, setSelectOrganization] = useState(null)
-    //Склады
-    const [warehouses, setWarehouses] = useState([]);
-    const [selectedWarehouse, setSelectedWarehouse] = useState(null);
-    const [products, setProducts] = useState([]);
-    const [availableOrder, setAvailableOrder] = useState(false);
-    const [phone, setPhone] = useState('');
-    const [contragents, setContragents] = useState([]);
-    const [selectContragent, setSelectContragent] = useState(0);
+type BaseEntity = {
+    id: Id;
+    name?: string;
+    short_name?: string;
+};
 
-    //Типы цен
-    const [priceTypes, setPriceTypes] = useState([]);
-    const [selectPriceType, setSelectPriceType] = useState(null);
+type Contragent = {
+    id: Id;
+    name?: string;
+    phone?: string;
+};
 
-    const [payboxes, setPayboxes] = useState([]);
-    const [selectedPaybox, setSelectedPaybox] = useState(null);
+type Product = {
+    id: Id;
+    name?: string;
+    title?: string;
+    unit?: number;
+    price: number;
+    quantity: number;
+};
 
-    const [selectedProducts, setSelectedProducts] = useState([]);
+type ApiProduct = {
+    id: Id;
+    name?: string;
+    title?: string;
+    unit?: number;
+};
 
-    const onSelectContragent = (contragentIndex) => {
+export function useOrder() {
+    const [token, setToken] = useState<string>("");
+
+    const [organizations, setOrganizations] = useState<BaseEntity[]>([]);
+    const [selectOrganization, setSelectOrganization] = useState<string | null>(
+        null
+    );
+
+    const [warehouses, setWarehouses] = useState<BaseEntity[]>([]);
+    const [selectedWarehouse, setSelectedWarehouse] = useState<string | null>(
+        null
+    );
+
+    const [products, setProducts] = useState<ApiProduct[]>([]);
+
+    const [availableOrder, setAvailableOrder] = useState<boolean>(false);
+
+    const [phone, setPhone] = useState<string>("");
+
+    const [contragents, setContragents] = useState<Contragent[]>([]);
+    const [selectContragent, setSelectContragent] = useState<string>("");
+
+    const [priceTypes, setPriceTypes] = useState<BaseEntity[]>([]);
+    const [selectPriceType, setSelectPriceType] = useState<string | null>(null);
+
+    const [payboxes, setPayboxes] = useState<BaseEntity[]>([]);
+    const [selectedPaybox, setSelectedPaybox] = useState<string | null>(null);
+
+    const [selectedProducts, setSelectedProducts] = useState<Product[]>([]);
+
+    const onSelectContragent = (contragentIndex: string) => {
         setSelectContragent(contragentIndex);
-    }
+    };
 
-    const onSelectPriceType = (value) => {
+    const onSelectPriceType = (value: string) => {
         setSelectPriceType(value);
-    }
+    };
 
-    const onClickToken = () => {
-        (async ()=> {
-            try{
+    const onClickToken = async () => {
+        try {
+            const [
+                orgsRes,
+                warehousesRes,
+                productsRes,
+                payboxRes,
+                priceTypesRes,
+            ] = await Promise.all([
+                fetch(`${BASE_URL}/api/v1/organizations/?token=${token}`),
+                fetch(`${BASE_URL}/api/v1/warehouses/?token=${token}`),
+                fetch(`${BASE_URL}/api/v1/nomenclature/?token=${token}`),
+                fetch(`${BASE_URL}/api/v1/payboxes/?token=${token}`),
+                fetch(`${BASE_URL}/api/v1/price_types/?token=${token}`),
+            ]);
 
-                const [orgsRes, warehousesRes, productsRes, payboxRes,priceTypesRes] = await Promise.all([
-                    fetch(
-                        `${BASE_URL}/api/v1/organizations/?token=${token}`
-                    ),
-                    fetch(
-                        `${BASE_URL}/api/v1/warehouses/?token=${token}`
-                    ),
-                    fetch(
-                        `${BASE_URL}/api/v1/nomenclature/?token=${token}`
-                    ),
-                    fetch(
-                        `${BASE_URL}/api/v1/payboxes/?token=${token}`
-                    ),
-                    fetch(
-                        `${BASE_URL}/api/v1/price_types/?token=${token}`
-                    ),
-                ]);
+            const orgs: ApiList<BaseEntity> = await orgsRes.json();
+            const warehousesData: ApiList<BaseEntity> =
+                await warehousesRes.json();
+            const productsData: ApiList<ApiProduct> = await productsRes.json();
+            const payboxesData: ApiList<BaseEntity> = await payboxRes.json();
+            const priceTypesData: ApiList<BaseEntity> =
+                await priceTypesRes.json();
 
-                const orgs = await orgsRes.json();
-                const warehousesData = await warehousesRes.json();
-                const productsData = await productsRes.json();
-                const payboxesData = await payboxRes.json();
-                const priceTypesData = await priceTypesRes.json();
-                if(orgs?.count > 0){
-                    console.log(orgs);
-                    setOrganizations(orgs.result);
-                    toast.success("Продажа создана", {
-                        description: `Касса подключена`,
-                    });
-                }
-                setWarehouses(warehousesData.result);
-                setProducts(productsData.result);
-                setAvailableOrder(true);
-                setPayboxes(payboxesData.result);
-                setPriceTypes(priceTypesData.result);
-                console.log(productsData);
+            if (orgs?.count > 0) {
+                setOrganizations(orgs.result);
+
+                toast.success("Касса подключена", {
+                    description: `Организаций: ${orgs.count}`,
+                });
             }
-            catch (e){
-                console.log(e);
-            }
-        })();
-    }
 
-    const findNumber = async () => {
-        console.log('findNumber', phone);
-        console.log(phone);
-        const urlParams = new URLSearchParams();
-        urlParams.set('phone', phone);
-        urlParams.set('token', token);
-        try{
-            const backend = `${BASE_URL}/api/v1/contragents/?` + urlParams.toString();
-            const response = await fetch(backend);
-            const data = await response.json();
-            console.log(data);
-            if(data?.count > 0){
-                console.log(data);
-                console.log(data.result);
-                setContragents(data.result);
-            }
-        }
-        catch (e) {
+            setWarehouses(warehousesData.result);
+            setProducts(productsData.result);
+            setPayboxes(payboxesData.result);
+            setPriceTypes(priceTypesData.result);
+
+            setAvailableOrder(true);
+        } catch (e) {
             console.log(e);
         }
-    }
+    };
 
-    const onChangeOrganization = (value) => {
-        console.log(value);
+    const findNumber = async () => {
+        const urlParams = new URLSearchParams();
+
+        urlParams.set("phone", phone);
+        urlParams.set("token", token);
+
+        try {
+            const backend =
+                `${BASE_URL}/api/v1/contragents/?` + urlParams.toString();
+
+            const response = await fetch(backend);
+
+            const data: ApiList<Contragent> = await response.json();
+
+            if (data?.count > 0) {
+                setContragents(data.result);
+            }
+        } catch (e) {
+            console.log(e);
+        }
+    };
+
+    const onChangeOrganization = (value: string) => {
         setSelectOrganization(value);
-    }
+    };
 
-    const onChangeWarehouse = (value) => {
-        console.log(value);
+    const onChangeWarehouse = (value: string) => {
         setSelectedWarehouse(value);
-    }
+    };
 
-    const onChangePayboxes = (value) => {
-        console.log(value);
+    const onChangePayboxes = (value: string) => {
         setSelectedPaybox(value);
-    }
+    };
 
-    const onAddProduct = (value) => {
+    const onAddProduct = (value: ApiProduct) => {
         setSelectedProducts((prev) => {
-            const exist = prev.find(
-                (product) => product.id === value.id
-            );
+            const exist = prev.find((product) => product.id === value.id);
 
             if (exist) {
-                return prev.map((product) => {
-                    if (product.id === value.id) {
-                        return {
+                return prev.map((product) =>
+                    product.id === value.id
+                        ? {
                             ...product,
                             quantity: product.quantity + 1,
-                        };
-                    }
-
-                    return product;
-                });
+                        }
+                        : product
+                );
             }
 
             return [
@@ -153,29 +180,13 @@ export function useOrder(){
         });
     };
 
-    const onRemoveProduct = (value) => {
-        setSelectedProducts((prev) => {
-       /*     if (value.quantity > 1) {
-                return prev.map((product) => {
-                    if (product.id === value.id) {
-                        return {
-                            ...product,
-                            quantity: product.quantity - 1,
-                        };
-                    }
-                    return product;
-                });
-            }
-*/
-            return prev.filter(
-                (product) => product.id !== value.id
-            );
-        });
+    const onRemoveProduct = (value: Product) => {
+        setSelectedProducts((prev) =>
+            prev.filter((product) => product.id !== value.id)
+        );
     };
 
-
-    const changeQuantity = (productId, quantity) => {
-        console.log(productId, quantity);
+    const changeQuantity = (productId: Id, quantity: number) => {
         setSelectedProducts((prev) =>
             prev.map((product) =>
                 product.id === productId
@@ -188,8 +199,7 @@ export function useOrder(){
         );
     };
 
-    const changePrice = (productId, price) => {
-        console.log(productId, price);
+    const changePrice = (productId: Id, price: number) => {
         setSelectedProducts((prev) =>
             prev.map((product) =>
                 product.id === productId
@@ -203,11 +213,10 @@ export function useOrder(){
     };
 
     const onMakeSale = async () => {
-        console.log('onMakeSale');
-        console.log(selectedProducts);
         try {
             const total = selectedProducts.reduce(
-                (sum, product) => sum + Number(product.price) * Number(product.quantity),
+                (sum, product) =>
+                    sum + Number(product.price) * Number(product.quantity),
                 0
             );
 
@@ -253,12 +262,15 @@ export function useOrder(){
             );
 
             const data = await response.json();
-            if(data?.length > 0) {
-                console.log(data[0].id);
+
+            if (data?.length > 0) {
                 toast.success("Продажа создана", {
-                    description: `ID: ${data?.[0]?.id ?? data?.id ?? "—"}, сумма: ${total.toFixed(2)} ₽`,
+                    description: `ID: ${
+                        data?.[0]?.id ?? data?.id ?? "—"
+                    }, сумма: ${total.toFixed(2)} ₽`,
                 });
             }
+
             console.log("SALE RESPONSE:", data);
         } catch (e) {
             console.log(e);
@@ -266,8 +278,29 @@ export function useOrder(){
     };
 
     return {
-        onClickToken, token, setToken, availableOrder, organizations, warehouses, products, findNumber,
-        phone, setPhone, contragents, onSelectContragent, onChangeOrganization, onChangeWarehouse, payboxes, onChangePayboxes,
-        priceTypes , onSelectPriceType, onAddProduct, selectedProducts, onRemoveProduct, changePrice, changeQuantity, onMakeSale
-    }
+        onClickToken,
+        token,
+        setToken,
+        availableOrder,
+        organizations,
+        warehouses,
+        products,
+        findNumber,
+        phone,
+        setPhone,
+        contragents,
+        onSelectContragent,
+        onChangeOrganization,
+        onChangeWarehouse,
+        payboxes,
+        onChangePayboxes,
+        priceTypes,
+        onSelectPriceType,
+        onAddProduct,
+        selectedProducts,
+        onRemoveProduct,
+        changePrice,
+        changeQuantity,
+        onMakeSale,
+    };
 }

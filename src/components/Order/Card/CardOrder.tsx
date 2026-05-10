@@ -4,7 +4,28 @@ import { Button } from "@/src/components/ui/button";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import { AppCard } from "@/src/components/Order/AppCard";
 
-export function CardOrder({ selectedProducts = [], onRemoveProduct, changePrice, changeQuantity}) {
+type SelectedProduct = {
+    id: number | string;
+    name?: string;
+    title?: string;
+    quantity: number;
+    price: number;
+};
+
+type CardOrderProps = {
+    selectedProducts?: SelectedProduct[];
+    onRemoveProduct: (product: SelectedProduct) => void;
+    changePrice: (productId: number | string, price: number) => void;
+    changeQuantity: (productId: number | string, quantity: number) => void;
+};
+
+export function CardOrder({
+                              selectedProducts = [],
+                              onRemoveProduct,
+                              changePrice,
+                              changeQuantity,
+                          }: CardOrderProps) {
+    // остальной код без изменений
     return (
         <AppCard>
             <CardHeader className="pb-3">

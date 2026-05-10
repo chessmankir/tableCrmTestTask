@@ -1,7 +1,21 @@
 import { Button } from "@/src/components/ui/button";
 import { CircleCheck } from "lucide-react";
 
-export function FooterOrder({ selectedProducts, onMakeSale}) {
+type SelectedProduct = {
+    id: number | string;
+    price: number;
+    quantity: number;
+};
+
+type FooterOrderProps = {
+    selectedProducts: SelectedProduct[];
+    onMakeSale: () => void | Promise<void>;
+};
+
+export function FooterOrder({
+                                selectedProducts,
+                                onMakeSale,
+                            }: FooterOrderProps) {
     const total = selectedProducts.reduce(
         (sum, product) => sum + product.price * product.quantity,
         0

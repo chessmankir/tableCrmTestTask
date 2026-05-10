@@ -8,10 +8,11 @@ import { Button } from "@/src/components/ui/button";
 import { AppCard } from "@/src/components/Order/AppCard";
 
 type Product = {
-    id?: number | string;
+    id: number | string;
     name?: string;
     title?: string;
-    price?: number | null;
+    unit?: number;
+    price?: number;
 };
 
 type GoodsProps = {

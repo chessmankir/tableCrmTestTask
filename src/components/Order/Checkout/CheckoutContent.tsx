@@ -1,14 +1,36 @@
-import {Label} from "@/src/components/ui/label";
-import {Input} from "@/src/components/ui/input";
-import {Button} from "@/src/components/ui/button";
-import {CardContent} from "@/src/components/ui/card";
+import { Label } from "@/src/components/ui/label";
+import { Input } from "@/src/components/ui/input";
+import { Button } from "@/src/components/ui/button";
+import { CardContent } from "@/src/components/ui/card";
 
-export  function CheckoutContent({onClickToken, token, setToken}){
+type CheckoutContentProps = {
+    onClickToken: () => void | Promise<void>;
+    token: string;
+    setToken: (value: string) => void;
+};
+
+export function CheckoutContent({
+                                    onClickToken,
+                                    token,
+                                    setToken,
+                                }: CheckoutContentProps) {
     return (
         <CardContent className="space-y-3">
             <Label htmlFor="token">Token</Label>
-            <Input value={token} onChange={(e) => setToken(e.target.value)} id="token" placeholder="Введите token кассы"/>
-            <Button onClick={onClickToken} className="w-full bg-[#e45f32] text-white hover:bg-[#d95429]">Подключить</Button>
+
+            <Input
+                value={token}
+                onChange={(e) => setToken(e.target.value)}
+                id="token"
+                placeholder="Введите token кассы"
+            />
+
+            <Button
+                onClick={onClickToken}
+                className="w-full bg-[#e45f32] text-white hover:bg-[#d95429]"
+            >
+                Подключить
+            </Button>
         </CardContent>
-    )
+    );
 }

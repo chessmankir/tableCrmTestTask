@@ -3,7 +3,7 @@ import { Badge } from "@/src/components/ui/badge";
 type HeaderOrderProps = {
     availableOrder: boolean;
     orgranizationCount: number;
-    goodCount: number;
+    warehouseCount: number;
 };
 
 export function HeaderOrder({ availableOrder, orgranizationCount, warehouseCount }: HeaderOrderProps) {
