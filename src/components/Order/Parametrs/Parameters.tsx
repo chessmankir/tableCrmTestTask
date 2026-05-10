@@ -4,10 +4,6 @@ import {SelectField} from "@/src/components/ui/SelectField";
 
 export  function Parameters({organizations, onChangeOrganization, warehouses, onChangeWarehouse, payboxes, onChangePayboxes,
                                 priceTypes , onSelectPriceType}){
-    console.log(organizations);
-    console.log(payboxes);
-    console.log(warehouses);
-    console.log(priceTypes);
     return (
         <AppCard>
             <CardHeader className="pb-3">

@@ -1,6 +1,7 @@
-import type { Metadata } from "next";
-import { Rubik, JetBrains_Mono } from "next/font/google";
+import type {Metadata} from "next";
+import {Rubik, JetBrains_Mono} from "next/font/google";
 import "./globals.css";
+import {Toaster} from "@/src/components/ui/sonner";
 
 const rubik = Rubik({
     variable: "--font-rubik",
@@ -23,7 +24,10 @@ export default function RootLayout({
                                    }: Readonly<{ children: React.ReactNode }>) {
     return (
         <html lang="ru" className={`${rubik.variable} ${jetBrainsMono.variable} light`}>
-        <body className="antialiased">{children}</body>
+            <body className="antialiased">
+                {children}
+                <Toaster/>
+            </body>
         </html>
     );
 }

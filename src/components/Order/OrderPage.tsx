@@ -13,22 +13,25 @@ import {useOrder} from "@/src/Hooks/useOrder";
 export function OrderPage(){
     const {onClickToken, token, setToken, availableOrder, organizations, warehouses,
         products, findNumber, phone, setPhone, contragents, onSelectContragent, onChangeOrganization,
-        onChangeWarehouse, payboxes, onChangePayboxes, priceTypes , onSelectPriceType} = useOrder();
+        onChangeWarehouse, payboxes, onChangePayboxes, priceTypes , onSelectPriceType, onAddProduct, selectedProducts,
+        onRemoveProduct, changePrice, changeQuantity, onMakeSale} = useOrder();
+    console.log(products);
     return (
         <main className="min-h-dvh bg-[#fbf7ef] text-slate-800">
             <div className="mx-auto w-full max-w-md px-3 pb-44 pt-4">
                 <HeaderOrder availableOrder={availableOrder}  orgranizationCount={organizations?.length}
-                             goodCount = {products?.count}/>
+                             warehouseCount = {warehouses?.length}/>
                 <Checkout  setToken={setToken} token={token} onClickToken={onClickToken} />
                 <ClientCrm phone={phone} setPhone={setPhone} findNumber={findNumber} contragents={contragents} onSelectContragent={onSelectContragent}/>
                 <Parameters organizations={organizations} onChangeOrganization={onChangeOrganization}
                             warehouses={warehouses} onChangeWarehouse={onChangeWarehouse} payboxes={payboxes} onChangePayboxes={onChangePayboxes}
                             priceTypes={priceTypes} onSelectPriceType={onSelectPriceType}/>
-                <Goods/>
-                <CardOrder/>
+                <Goods products={products} onAddProduct={onAddProduct}
+                />
+                <CardOrder selectedProducts={selectedProducts} onRemoveProduct={onRemoveProduct} changePrice={changePrice} changeQuantity={ changeQuantity}/>
                 <Comments/>
             </div>
-            <FooterOrder/>
+            <FooterOrder selectedProducts={selectedProducts} onMakeSale={onMakeSale}/>
         </main>
     )
 }

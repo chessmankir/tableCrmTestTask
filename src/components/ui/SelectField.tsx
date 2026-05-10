@@ -1,35 +1,58 @@
-import {Label} from "@/src/components/ui/label";
-import {Select, SelectContent, SelectItem, SelectTrigger, SelectValue} from "@/src/components/ui/select";
+import { Label } from "@/src/components/ui/label";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "@/src/components/ui/select";
 
-export function SelectField({
-                         label,
-                         placeholder,
-                         items = [],
-                         onValueChange,
-                     }: {
+type SelectFieldProps = {
     label: string;
     placeholder: string;
     items?: any[];
+    value?: string;
     onValueChange?: (value: string) => void;
-}) {
+};
+
+export function SelectField({
+                                label,
+                                placeholder,
+                                items = [],
+                                value,
+                                onValueChange,
+                            }: SelectFieldProps) {
     return (
         <>
             <Label>{label}</Label>
 
-            <Select disabled={!items.length} onValueChange={onValueChange}>
-                <SelectTrigger>
+            <Select
+                value={value}
+                onValueChange={onValueChange}
+                disabled={!items.length}
+            >
+                <SelectTrigger className="w-full">
                     <SelectValue placeholder={placeholder} />
                 </SelectTrigger>
 
                 <SelectContent>
-                    {items.map((item, index) => (
-                        <SelectItem
-                            key={item.id ?? index}
-                            value={String(item.id ?? index)}
-                        >
-                            {item.short_name || item.full_name || item.work_name || "Без названия"}
-                        </SelectItem>
-                    ))}
+                    {items.map((item, index) => {
+                        const itemValue = String(item.id ?? item.uuid ?? index);
+
+                        const itemLabel =
+                            item.name ||
+                            item.short_name ||
+                            item.full_name ||
+                            item.work_name ||
+                            item.description ||
+                            `Вариант ${index + 1}`;
+
+                        return (
+                            <SelectItem key={itemValue} value={itemValue}>
+                                {itemLabel}
+                            </SelectItem>
+                        );
+                    })}
                 </SelectContent>
             </Select>
         </>

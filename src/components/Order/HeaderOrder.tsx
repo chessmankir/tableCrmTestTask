@@ -6,7 +6,7 @@ type HeaderOrderProps = {
     goodCount: number;
 };
 
-export function HeaderOrder({ availableOrder, orgranizationCount, goodCount }: HeaderOrderProps) {
+export function HeaderOrder({ availableOrder, orgranizationCount, warehouseCount }: HeaderOrderProps) {
 
     return (
         <section className="mb-4 rounded-3xl border border-border/70 bg-card/95 p-4 shadow-sm backdrop-blur">
@@ -36,8 +36,8 @@ export function HeaderOrder({ availableOrder, orgranizationCount, goodCount }: H
 
                 {availableOrder && (
                     <p className="text-xs text-muted-foreground">
-                        Организаций: {orgranizationCount}, товаров:{" "}
-                        {goodCount}
+                        Организаций: {orgranizationCount}, складов:{" "}
+                        {warehouseCount}
                     </p>
                 )}
             </div>
