@@ -1,9 +1,9 @@
 import { Badge } from "@/src/components/ui/badge";
 
 type HeaderOrderProps = {
-        availableOrder: boolean;
-        orgranizationCount: number;
-        goodCount: number;
+    availableOrder: boolean;
+    orgranizationCount: number;
+    goodCount: number;
 };
 
 export function HeaderOrder({ availableOrder, orgranizationCount, goodCount }: HeaderOrderProps) {
