@@ -3,6 +3,7 @@ import { Input } from "@/src/components/ui/input";
 import { Button } from "@/src/components/ui/button";
 import { ShoppingCart, Trash2 } from "lucide-react";
 import { AppCard } from "@/src/components/Order/AppCard";
+import {useCardOrder} from "@/src/Hooks/useCardOrder";
 
 type SelectedProduct = {
     id: number | string;
@@ -12,19 +13,8 @@ type SelectedProduct = {
     price: number;
 };
 
-type CardOrderProps = {
-    selectedProducts?: SelectedProduct[];
-    onRemoveProduct: (product: SelectedProduct) => void;
-    changePrice: (productId: number | string, price: number) => void;
-    changeQuantity: (productId: number | string, quantity: number) => void;
-};
-
-export function CardOrder({
-                              selectedProducts = [],
-                              onRemoveProduct,
-                              changePrice,
-                              changeQuantity,
-                          }: CardOrderProps) {
+export function CardOrder(){
+     const {removeProduct, changeQuantity, changePrice, selectedProducts}   = useCardOrder()
     // остальной код без изменений
     return (
         <AppCard>
@@ -59,7 +49,7 @@ export function CardOrder({
                                 <div className="mb-3 flex items-center justify-between">
                                     <p className="text-sm font-medium">{name}</p>
 
-                                    <Button variant="ghost" size="icon" onClick={() => onRemoveProduct(product)}>
+                                    <Button variant="ghost" size="icon" onClick={() => removeProduct(product)}>
                                         <Trash2 className="size-4" />
                                     </Button>
                                 </div>

@@ -1,35 +1,13 @@
 import {CardContent, CardDescription, CardHeader, CardTitle} from "@/src/components/ui/card";
 import {AppCard} from "@/src/components/Order/AppCard";
 import {SelectField} from "@/src/components/ui/SelectField";
+import {useParameters} from "@/src/Hooks/useParameters";
 
-type SelectItemType = {
-    id: number | string;
-    name?: string;
-    short_name?: string;
-};
 
-type ParametersProps = {
-    organizations: SelectItemType[];
-    warehouses: SelectItemType[];
-    payboxes: SelectItemType[];
-    priceTypes: SelectItemType[];
+export function Parameters(){
+    const {organizations, warehouses, payboxes, priceTypes,
+        onChangeOrganization,onChangeWarehouse, onChangePayboxes, onSelectPriceType } = useParameters();
 
-    onChangeOrganization: (value: string) => void;
-    onChangeWarehouse: (value: string) => void;
-    onChangePayboxes: (value: string) => void;
-    onSelectPriceType: (value: string) => void;
-};
-
-export function Parameters({
-                               organizations,
-                               onChangeOrganization,
-                               warehouses,
-                               onChangeWarehouse,
-                               payboxes,
-                               onChangePayboxes,
-                               priceTypes,
-                               onSelectPriceType,
-                           }: ParametersProps) {
     return (
         <AppCard>
             <CardHeader className="pb-3">

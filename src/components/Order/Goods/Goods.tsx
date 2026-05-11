@@ -6,6 +6,8 @@ import { PackagePlus } from "lucide-react";
 import { Input } from "@/src/components/ui/input";
 import { Button } from "@/src/components/ui/button";
 import { AppCard } from "@/src/components/Order/AppCard";
+import {useCheckoutStore} from "@/src/store/useCheckouteStore";
+import {useCart} from "@/src/Hooks/useCart";
 
 type Product = {
     id: number | string;
@@ -15,14 +17,10 @@ type Product = {
     price?: number;
 };
 
-type GoodsProps = {
-    products: Product[];
-    onAddProduct: (product: Product) => void;
-};
 
-export function Goods({ products, onAddProduct }: GoodsProps) {
-    console.log(products);
+export function Goods() {
     const [search, setSearch] = useState("");
+    const {products, addProduct} = useCart();
 
     const filteredProducts = useMemo(() => {
         const value = search.trim().toLowerCase();
@@ -34,6 +32,7 @@ export function Goods({ products, onAddProduct }: GoodsProps) {
             return name.toLowerCase().includes(value);
         });
     }, [products, search]);
+
 
     return (
         <AppCard>
@@ -78,7 +77,7 @@ export function Goods({ products, onAddProduct }: GoodsProps) {
                                             type="button"
                                             variant="ghost"
                                             size="sm"
-                                            onClick={() => onAddProduct(product)}
+                                            onClick={() => addProduct(product)}
                                         >
                                             Добавить
                                         </Button>

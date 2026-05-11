@@ -21,14 +21,11 @@ export function OrderPage(){
             <div className="mx-auto w-full max-w-md px-3 pb-44 pt-4">
                 <HeaderOrder availableOrder={availableOrder}  orgranizationCount={organizations?.length}
                              warehouseCount = {warehouses?.length}/>
-                <Checkout  setToken={setToken} token={token} onClickToken={onClickToken} />
-                <ClientCrm phone={phone} setPhone={setPhone} findNumber={findNumber} contragents={contragents} onSelectContragent={onSelectContragent}/>
-                <Parameters organizations={organizations} onChangeOrganization={onChangeOrganization}
-                            warehouses={warehouses} onChangeWarehouse={onChangeWarehouse} payboxes={payboxes} onChangePayboxes={onChangePayboxes}
-                            priceTypes={priceTypes} onSelectPriceType={onSelectPriceType}/>
-                <Goods products={products} onAddProduct={onAddProduct}
-                />
-                <CardOrder selectedProducts={selectedProducts} onRemoveProduct={onRemoveProduct} changePrice={changePrice} changeQuantity={ changeQuantity}/>
+                <Checkout />
+                <ClientCrm />
+                <Parameters />
+                <Goods />
+                <CardOrder />
                 <Comments/>
             </div>
             <FooterOrder selectedProducts={selectedProducts} onMakeSale={onMakeSale}/>

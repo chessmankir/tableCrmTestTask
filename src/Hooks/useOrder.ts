@@ -3,43 +3,16 @@
 import { useState } from "react";
 import { BASE_URL } from "@/src/api/Backend";
 import { toast } from "sonner";
+import {BaseEntity} from "@/src/types/BaseEntityType";
+import {ApiProduct} from "@/src/types/ApiProductType";
+import {Contragent} from "@/src/types/ContragentType";
+import {Product} from "@/src/types/ProductType";
+import {ApiList} from "@/src/types/AppListType";
 
-type Id = number | string;
-
-type ApiList<T = unknown> = {
-    result: T[];
-    count: number;
-};
-
-type BaseEntity = {
-    id: Id;
-    name?: string;
-    short_name?: string;
-};
-
-type Contragent = {
-    id: Id;
-    name?: string;
-    phone?: string;
-};
-
-type Product = {
-    id: Id;
-    name?: string;
-    title?: string;
-    unit?: number;
-    price: number;
-    quantity: number;
-};
-
-type ApiProduct = {
-    id: Id;
-    name?: string;
-    title?: string;
-    unit?: number;
-};
+type Id = string | number;
 
 export function useOrder() {
+    //const token = useCheckoutStore((state) => state.token);
     const [token, setToken] = useState<string>("");
 
     const [organizations, setOrganizations] = useState<BaseEntity[]>([]);

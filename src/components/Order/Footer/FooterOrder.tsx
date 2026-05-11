@@ -1,21 +1,10 @@
 import { Button } from "@/src/components/ui/button";
 import { CircleCheck } from "lucide-react";
+import {useFooterOrder} from "@/src/Hooks/useFooterOrder";
 
-type SelectedProduct = {
-    id: number | string;
-    price: number;
-    quantity: number;
-};
+export function FooterOrder() {
 
-type FooterOrderProps = {
-    selectedProducts: SelectedProduct[];
-    onMakeSale: () => void | Promise<void>;
-};
-
-export function FooterOrder({
-                                selectedProducts,
-                                onMakeSale,
-                            }: FooterOrderProps) {
+    const {onMakeSale, selectedProducts} = useFooterOrder();
     const total = selectedProducts.reduce(
         (sum, product) => sum + product.price * product.quantity,
         0

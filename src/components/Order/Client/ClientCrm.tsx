@@ -1,28 +1,10 @@
 import { ClientHeader } from "@/src/components/Order/Client/ClientHeader";
 import { ClientContent } from "@/src/components/Order/Client/ClientContent";
 import { AppCard } from "@/src/components/Order/AppCard";
+import {useClientBlock} from "@/src/Hooks/useClientBlock";
 
-type Contragent = {
-    id: number | string;
-    name?: string;
-    phone?: string;
-};
-
-type ClientCrmProps = {
-    findNumber: () => void | Promise<void>;
-    phone: string;
-    setPhone: (value: string) => void;
-    contragents: Contragent[];
-    onSelectContragent: (value: string) => void;
-};
-
-export function ClientCrm({
-                              findNumber,
-                              phone,
-                              setPhone,
-                              contragents,
-                              onSelectContragent,
-                          }: ClientCrmProps) {
+export function ClientCrm() {
+    const {phone, setPhone, contragents, findNumber, onSelectContragent} = useClientBlock();
     return (
         <AppCard>
             <ClientHeader />
