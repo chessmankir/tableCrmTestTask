@@ -6,7 +6,7 @@ type HeaderOrderProps = {
     warehouseCount: number;
 };
 
-export function HeaderOrder({ availableOrder, orgranizationCount, warehouseCount }: HeaderOrderProps) {
+export function HeaderOrder() {
 
     return (
         <section className="mb-4 rounded-3xl border border-border/70 bg-card/95 p-4 shadow-sm backdrop-blur">
@@ -22,7 +22,7 @@ export function HeaderOrder({ availableOrder, orgranizationCount, warehouseCount
                 WebApp для создания продажи и проведения в один клик.
             </p>
 
-            <div className="mt-3 flex items-center gap-2">
+           {/* <div className="mt-3 flex items-center gap-2">
                 <Badge
                     variant="secondary"
                     className={
@@ -40,7 +40,7 @@ export function HeaderOrder({ availableOrder, orgranizationCount, warehouseCount
                         {warehouseCount}
                     </p>
                 )}
-            </div>
+            </div>*/}
         </section>
     );
 }
